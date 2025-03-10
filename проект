@@ -7,6 +7,13 @@
 #include <ctime>
 #include <cstdlib>
 
+using std::cin;
+using std::cout;
+using std::endl;
+using std::vector;
+using std::unordered_set;
+using std::string;
+
 struct Thema { //наши темы
     std::string PLAYER, MONSTER, WALL, POINT, EMPTY = "  ";
 }
@@ -21,3 +28,12 @@ struct Entity { //координаты какой то сущности
 
 Entity player;
 std::vector<Entity> monsters
+
+Theme sea    = {"🐠", "🦈", "🪸", "⚪", "⭐", " "};
+Theme forest = {"🐰", "🐺", "🌲", "🍄", "🥕", " "};
+Theme city   = {"🚗", "👮", "🚧", "🛞", "💎", " "};
+Theme space  = {"🚀", "👾", "🌑", "✨", "🌟", " "};
+
+vector<Theme> themes = {sea, forest, city, space};
+Theme currentTheme = SEA;
+vector<vector<string>> currentLevel;

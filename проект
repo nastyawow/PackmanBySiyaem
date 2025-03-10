@@ -151,5 +151,5 @@ std::string attemptsText = "Попытка: " + std::to_string(attempts);
 
     SDL_RenderPresent(renderer);
 }
-
-//ваш основной цикл
+// тут ваш основной цикл
+// маш пиши через using пж, так аккуратнее смотрится :)

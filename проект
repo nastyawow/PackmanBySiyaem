@@ -29,11 +29,127 @@ struct Entity { //координаты какой то сущности
 Entity player;
 std::vector<Entity> monsters
 
-Theme sea    = {"🐠", "🦈", "🪸", "⚪", "⭐", " "};
-Theme forest = {"🐰", "🐺", "🌲", "🍄", "🥕", " "};
-Theme city   = {"🚗", "👮", "🚧", "🛞", "💎", " "};
-Theme space  = {"🚀", "👾", "🌑", "✨", "🌟", " "};
 
-vector<Theme> themes = {sea, forest, city, space};
+
+Thema SEA    = {"🐠", "🦈", "🪸", "⚪", "⭐"};   // Морская
+Thema FOREST = {"🐰", "🐺", "🌲", "🍄", "🥕"};   // Лесная
+Thema CITY   = {"🚗", "👮", "🚧", "🛞", "💎"};   // Городская
+Thema SPACE  = {"🚀", "👾", "🌑", "✨", "🌟"};   // Космическая
+
+std::vector<Thema> thems = {SEA, FOREST};
 Theme currentTheme = SEA;
-vector<vector<string>> currentLevel;
+std::vector<vector<string>> currentLevel;
+
+
+std::unordered_map<string, vector<vector<vector<string>>>> LevelsByThems = {
+    {"SEA", {
+        {{"🪸","🪸","🪸","🪸","🪸","🪸","🪸"},
+         {"🪸","🐠","⚪","  ","🪸","⚪","🪸"},
+         {"🪸","  ","🪸","  ","⚪","  ","🪸"},
+         {"🪸","⚪","  ","🪸","  ","🦈","🪸"},
+         {"🪸","⚪","  ","⚪","🪸","  ","🪸"},
+         {"🪸","🦈","  ","  ","  ","⚪","🪸"},
+         {"🪸","🪸","🪸","🪸","🪸","🪸","🪸"}}
+    }},
+
+    {"FOREST", {
+        {{"🌲","🌲","🌲","🌲","🌲","🌲","🌲"},
+         {"🌲","🐰","🍄","  ","🌲","🍄","🌲"},
+         {"🌲","  ","🌲","  ","🍄","  ","🌲"},
+         {"🌲","🍄","🌲","🍄","  ","🐺","🌲"},
+         {"🌲","  ","🌲","  ","🌲","  ","🌲"},
+         {"🌲","🍄","  ","🍄","  ","🍄","🌲"},
+         {"🌲","🌲","🌲","🌲","🌲","🌲","🌲"}}
+    }},
+
+    {"CITY", {
+        {{"🚧","🚧","🚧","🚧","🚧","🚧","🚧"},
+         {"🚧","🚗","⚪","  ","🚧","⚪","🚧"},
+         {"🚧","  ","🚧","  ","⚪","  ","🚧"},
+         {"🚧","⚪","🚧","⚪","🚧","👮","🚧"},
+         {"🚧","  ","  ","  ","⚪","  ","🚧"},
+         {"🚧","⚪","  ","⚪","  ","⚪","🚧"},
+         {"🚧","🚧","🚧","🚧","🚧","🚧","🚧"}}
+    }},
+
+    {"SPACE", {
+        {{"🌑","🌑","🌑","🌑","🌑","🌑","🌑"},
+         {"🌑","🚀","✨","  ","🌑","✨","🌑"},
+         {"🌑","  ","🌑","  ","✨","  ","🌑"},
+         {"🌑","✨","🌑","✨","🌑","👾","🌑"},
+         {"🌑","  ","  ","  ","✨","  ","🌑"},
+         {"🌑","✨","  ","✨","  ","✨","🌑"},
+         {"🌑","🌑","🌑","🌑","🌑","🌑","🌑"}}
+    }}
+};
+
+Thema currentThema = SEA;
+
+
+// тут настройка уровня будет размеры
+
+// ваша часть герлз
+
+void renderLevel(SDL_Renderer* renderer, TTF_Font* font) //окошко
+{
+    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+    SDL_RenderClear(renderer);
+
+    SDL_Color textColor = {255, 255, 255, 255};
+
+
+
+//сетка 
+for (int y = 0; y < HEIGHT; y++) {
+        for (int x = 0; x < WIDTH; x++) {
+            std::string cellText = currentLevel[y][x];
+
+            SDL_Surface* surface = TTF_RenderText_Solid(font, cellText.c_str(), textColor);
+            if (!surface) {
+                std::cerr << "Ошибка TTF_RenderText_Solid: " << SDL_GetError() << std::endl;
+                continue;
+            }
+
+            SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
+            int texW = surface->w;
+            int texH = surface->h;
+            SDL_DestroySurface(surface);
+
+            if (!texture) {
+                std::cerr << "Ошибка SDL_CreateTextureFromSurface: " << SDL_GetError() << std::endl;
+                continue;
+            }
+
+            SDL_FRect destRect = { static_cast<float>(x * CELL_SIZE), static_cast<float>(y * CELL_SIZE), static_cast<float>(CELL_SIZE), static_cast<float>(CELL_SIZE) };
+
+            // Центрируем текст в ячейке
+            int offsetX = (CELL_SIZE - texW) / 2;
+            int offsetY = (CELL_SIZE - texH) / 2;
+            destRect.x += offsetX;
+            destRect.y += offsetY;
+
+            SDL_RenderTexture(renderer, texture, NULL, &destRect);
+            SDL_DestroyTexture(texture); 
+        }
+    }
+
+//инфа об уровне
+std::string attemptsText = "Попытка: " + std::to_string(attempts);
+    SDL_Surface* surface = TTF_RenderText_Solid(font, attemptsText.c_str(), textColor);
+    if (surface) {
+        int textW = surface->w;
+        int textH = surface->h;
+        SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
+        SDL_DestroySurface(surface);
+
+        if (texture) {
+            SDL_FRect destRect = { 10.0f, static_cast<float>(HEIGHT * CELL_SIZE + 10), static_cast<float>(textW), static_cast<float>(textH) };
+            SDL_RenderTexture(renderer, texture, NULL, &destRect);
+            SDL_DestroyTexture(texture);
+        }
+    }
+
+    SDL_RenderPresent(renderer);
+}
+
+//ваш основной цикл

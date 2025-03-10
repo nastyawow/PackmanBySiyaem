@@ -14,8 +14,8 @@ using std::vector;
 using std::unordered_set;
 using std::string;
 
-struct Thema { //наши темы
-    std::string PLAYER, MONSTER, WALL, POINT, EMPTY = "  ";
+struct temka { //наши темы
+    std::string player, monster, wall, point, empty = "  ";
 }
 
 int WIDTH, HEIGHT; //ну тут понятно
@@ -31,18 +31,18 @@ std::vector<Entity> monsters
 
 
 
-Thema SEA    = {"🐠", "🦈", "🪸", "⚪", "⭐"};   // Морская
-Thema FOREST = {"🐰", "🐺", "🌲", "🍄", "🥕"};   // Лесная
-Thema CITY   = {"🚗", "👮", "🚧", "🛞", "💎"};   // Городская
-Thema SPACE  = {"🚀", "👾", "🌑", "✨", "🌟"};   // Космическая
+temka sea    = {"🐠", "🦈", "🪸", "⚪", "⭐"};   // Морская
+temka forest = {"🐰", "🐺", "🌲", "🍄", "🥕"};   // Лесная
+temka city   = {"🚗", "👮", "🚧", "🛞", "💎"};   // Городская
+temka space  = {"🚀", "👾", "🌑", "✨", "🌟"};   // Космическая
 
-std::vector<Thema> thems = {SEA, FOREST};
-Theme currentTheme = SEA;
-std::vector<vector<string>> currentLevel;
+std::vector<temka> thems = {sea, forest};
+Theme now_t = sea;
+std::vector<vector<string>> now;
 
 
 std::unordered_map<string, vector<vector<vector<string>>>> LevelsByThems = {
-    {"SEA", {
+    {"sea", {
         {{"🪸","🪸","🪸","🪸","🪸","🪸","🪸"},
          {"🪸","🐠","⚪","  ","🪸","⚪","🪸"},
          {"🪸","  ","🪸","  ","⚪","  ","🪸"},
@@ -52,7 +52,7 @@ std::unordered_map<string, vector<vector<vector<string>>>> LevelsByThems = {
          {"🪸","🪸","🪸","🪸","🪸","🪸","🪸"}}
     }},
 
-    {"FOREST", {
+    {"forest", {
         {{"🌲","🌲","🌲","🌲","🌲","🌲","🌲"},
          {"🌲","🐰","🍄","  ","🌲","🍄","🌲"},
          {"🌲","  ","🌲","  ","🍄","  ","🌲"},
@@ -62,7 +62,7 @@ std::unordered_map<string, vector<vector<vector<string>>>> LevelsByThems = {
          {"🌲","🌲","🌲","🌲","🌲","🌲","🌲"}}
     }},
 
-    {"CITY", {
+    {"city", {
         {{"🚧","🚧","🚧","🚧","🚧","🚧","🚧"},
          {"🚧","🚗","⚪","  ","🚧","⚪","🚧"},
          {"🚧","  ","🚧","  ","⚪","  ","🚧"},
@@ -72,7 +72,7 @@ std::unordered_map<string, vector<vector<vector<string>>>> LevelsByThems = {
          {"🚧","🚧","🚧","🚧","🚧","🚧","🚧"}}
     }},
 
-    {"SPACE", {
+    {"space", {
         {{"🌑","🌑","🌑","🌑","🌑","🌑","🌑"},
          {"🌑","🚀","✨","  ","🌑","✨","🌑"},
          {"🌑","  ","🌑","  ","✨","  ","🌑"},
@@ -83,7 +83,7 @@ std::unordered_map<string, vector<vector<vector<string>>>> LevelsByThems = {
     }}
 };
 
-Thema currentThema = SEA;
+temka now_temka = sea;
 
 
 // тут настройка уровня будет размеры
@@ -91,43 +91,42 @@ Thema currentThema = SEA;
 // ваша часть герлз
 
 //саш, проверь пж на что агрится ._.
-void setupLevel(int levelNum, const std::string& themeName) {
-    currentLevel = LevelsByTheme[themeName][levelNum];
-    HEIGHT = currentLevel.size();
-    WIDTH = currentLevel[0].size();
+void setupLevel(int levelNum, const string& themeName) {
+    now = sort_theme[themeName][levelNum];
+    HEIGHT = now.size();
+    WIDTH = now[0].size();
     monsters.clear();
     for (int y = 0; y < HEIGHT; y++) {
         for (int x = 0; x < WIDTH; x++) {
-            std::string &cell = currentLevel[y][x];
+            string &cell = now[y][x];
             if (cell == "🐠" || cell == "🐰" || cell == "🚗" || cell == "🚀") {
                 player = {x, y};
-                cell = currentTheme.PLAYER;
+                cell = now_t.player;
             } else if (cell == "🦈" || cell == "🐺" || cell == "👮" || cell == "👾") {
                 monsters.push_back({x, y});
-                cell = currentTheme.MONSTER;
+                cell = now_t.monster;
             } else if (cell == "🪸" || cell == "🌲" || cell == "🚧" || cell == "🌑") {
-                cell = currentTheme.WALL;
+                cell = now_t.wall;
             } else if (cell == "⚪" || cell == "🍄" || cell == "🛞" || cell == "✨") {
-                cell = currentTheme.POINT;
+                cell = now_t.point;
             } else if (cell == "⭐" || cell == "🥕" || cell == "💎" || cell == "🌟") {
-                cell = currentTheme.BONUS;
+                cell = now_t.BONUS;
             } else {
-                cell = currentTheme.EMPTY;
+                cell = now_t.empty;
             }
         }
     }
 }
-
 bool checkWin() {
-    for (auto &row : currentLevel)
+    for (auto &row : now)
         for (auto &cell : row)
-            if (cell == currentTheme.POINT || cell == currentTheme.BONUS)
+            if (cell == now_t.point || cell == now_t.BONUS)
                 return false;
     return true;
 }
 bool checkCollision(int x, int y) {
-    return (currentLevel[y][x] == currentTheme.WALL ||
-            currentLevel[y][x] == currentTheme.MONSTER);
+    return (now[y][x] == now_t.wall ||
+            now[y][x] == now_t.monster);
 }
 void moveMonsters() {
     for (auto &m : monsters) {
@@ -137,15 +136,14 @@ void moveMonsters() {
         else if (dir == 1) ny++;
         else if (dir == 2) nx--;
         else if (dir == 3) nx++;
-        if (nx >= 0 && ny >= 0 && nx < WIDTH && ny < HEIGHT &&
-            currentLevel[ny][nx] == currentTheme.EMPTY) {
-            currentLevel[m.y][m.x] = currentTheme.EMPTY;
+        if (nx >= 0 && ny >= 0 && nx < WIDTH && ny < HEIGHT && now[ny][nx] == now_t.empty) {
+            now[m.y][m.x] = now_t.empty;
             m.x = nx; m.y = ny;
-            currentLevel[m.y][m.x] = currentTheme.MONSTER;
+            now[m.y][m.x] = now_t.monster;
         }
     }
 }
-
+//а ничо тот факт что у нас дедлайн сегодня друзья, не игнорьте в телеге умоляю
 
 void renderLevel(SDL_Renderer* renderer, TTF_Font* font) //окошко
 {
@@ -158,7 +156,7 @@ void renderLevel(SDL_Renderer* renderer, TTF_Font* font) //окошко
 //сетка 
 for (int y = 0; y < HEIGHT; y++) {
         for (int x = 0; x < WIDTH; x++) {
-            std::string cellText = currentLevel[y][x];
+            std::string cellText = now[y][x];
 
             SDL_Surface* surface = TTF_RenderText_Solid(font, cellText.c_str(), textColor);
             if (!surface) {
@@ -209,3 +207,4 @@ std::string attemptsText = "Попытка: " + std::to_string(attempts);
 }
 // тут ваш основной цикл
 // маш пиши через using пж, так аккуратнее смотрится :)
+

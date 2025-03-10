@@ -1,1 +1,23 @@
-Пока пусто
+#include <SDL3/SDL.h>
+#include <SDL3_ttf/SDL_ttf.h>
+#include <iostream>
+#include <vector>
+#include <string>
+#include <unordered_map>
+#include <ctime>
+#include <cstdlib>
+
+struct Thema { //наши темы
+    std::string PLAYER, MONSTER, WALL, POINT, EMPTY = "  ";
+}
+
+int WIDTH, HEIGHT; //ну тут понятно
+int attempts = 0;
+bool gameover;
+
+struct Entity { //координаты какой то сущности
+   int x, y;
+}
+
+Entity player;
+std::vector<Entity> monsters

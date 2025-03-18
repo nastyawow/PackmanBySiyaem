@@ -6,7 +6,9 @@
                 "${workspaceFolder}/**",
                 "${workspaceFolder}/SDL2/i686-w64-mingw32/include/SDL2",
                 "${workspaceFolder}/SDL2/i686-w64-mingw32/include",
-                "${workspaceFolder}/SDL2/x86_64-w64-mingw32/include"
+                "${workspaceFolder}/SDL2/x86_64-w64-mingw32/include",
+                "${workspaceFolder}/SDL2/i686-w64-mingw32",
+                "${workspaceFolder}"
             ],
             "defines": [
                 "_DEBUG",

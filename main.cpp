@@ -2,7 +2,7 @@
 //
 #define SDL_MAIN_HANDLED
 #include <iostream>
-#include <SDL.h>
+#include <include/SDL.h>
 
 
 const int WIDTH = 800, HEIGHT = 600;

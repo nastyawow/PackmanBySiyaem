@@ -1,8 +1,8 @@
 ﻿// project_p.cpp : Этот файл содержит функцию "main". Здесь начинается и заканчивается выполнение программы.
 //
-
+#define SDL_MAIN_HANDLED
 #include <iostream>
-#include <SDL2/SDL.h>
+#include <SDL.h>
 
 
 const int WIDTH = 800, HEIGHT = 600;

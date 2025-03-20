@@ -2,35 +2,21 @@
 //
 // #define SDL_MAIN_HANDLED
 #include <iostream>
+
+// Third-party library
 #include <SDL2/SDL.h>
 
-const int WIDTH = 800, HEIGHT = 600;
+int main(int argc, char* argv[]){
 
-int main(int argc, char *argv[])
-{
-    //std::cout << "hello";
-    
-    SDL_Init( SDL_INIT_EVERYTHING);
-
-    SDL_Window *window = SDL_CreateWindow( "Hello SDL", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, WIDTH, HEIGHT, SDL_WINDOW_ALLOW_HIGHDPI );
-
-    if ( NULL == window) {
-        std::cout << "no" << SDL_GetError();
-        return 1;
-    } 
-    SDL_Event windowEvent;
-    while( true ){
-        if ( SDL_PollEvent( &windowEvent ) ){
-            if ( SDL_QUIT == windowEvent.type) {
-                break;
-            }
-        }
+    if(SDL_Init(SDL_INIT_VIDEO) < 0){
+        std::cout << "SDL could not be initialized: " <<
+                  SDL_GetError();
+    }else{
+        std::cout << "SDL video system is ready to go\n";
     }
 
-    SDL_DestroyWindow( window);
-    SDL_Quit();
+    return 0;
 
-    return EXIT_SUCCESS;
 
 
     //  я разобралась с гитом, уже победа

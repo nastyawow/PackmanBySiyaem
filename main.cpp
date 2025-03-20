@@ -31,6 +31,17 @@ int main(int argc, char* argv[]){
 			case SDL_QUIT:
 				running = false;
 				break;
+			case SDL_KEYDOWN:
+				switch(event.key.keysym.scancode){
+				case SDL_SCANCODE_A:
+					
+					break;
+				default:
+					break;
+				}				
+				break;
+			case SDL_KEYUP:
+				break;
 			default:
 				break;
 			}
@@ -38,14 +49,15 @@ int main(int argc, char* argv[]){
 		SDL_SetRenderDrawColor(renderer, 100, 55, 25, 255);
 		SDL_RenderClear(renderer);
 
-		// SDL_Rect rect = {};
-		// rect.w = 100;
-		// rect.h = 100;
-		// rect.x = 0;
-		// rect.y = 0;
-
-		// SDL_RenderFillRect(renderer, rect);
-
+		SDL_Rect rect;
+		rect.w = 100;
+		rect.h = 100;
+		rect.x = 0;
+		rect.y = 0;
+        
+        SDL_SetRenderDrawColor(renderer, 55, 255, 100, 255);
+		SDL_RenderFillRect(renderer, &rect);
+        
 		SDL_RenderPresent(renderer);
 		SDL_Delay(16);
 	}
@@ -57,7 +69,7 @@ int main(int argc, char* argv[]){
 
 
 
-    //yyeeeertgy
+    //Разобралась с подключением сдл
 
 
 

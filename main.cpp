@@ -1,15 +1,15 @@
 ﻿// project_p.cpp : Этот файл содержит функцию "main". Здесь начинается и заканчивается выполнение программы.
 //
-#define SDL_MAIN_HANDLED
+// #define SDL_MAIN_HANDLED
 #include <iostream>
-#include <include/SDL.h>
-
+#include <SDL2/SDL.h>
 
 const int WIDTH = 800, HEIGHT = 600;
 
 int main(int argc, char *argv[])
 {
-
+    //std::cout << "hello";
+    
     SDL_Init( SDL_INIT_EVERYTHING);
 
     SDL_Window *window = SDL_CreateWindow( "Hello SDL", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, WIDTH, HEIGHT, SDL_WINDOW_ALLOW_HIGHDPI );

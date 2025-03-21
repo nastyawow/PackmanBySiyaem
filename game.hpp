@@ -23,6 +23,7 @@ class Game{
       };
 
     private:
+      int count;
       bool isRunning;
       SDL_Window* window = nullptr;
 	    SDL_Renderer* renderer = nullptr;

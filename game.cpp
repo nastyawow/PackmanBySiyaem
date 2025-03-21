@@ -12,15 +12,15 @@ void Game::init(const char* title, int width, int height, bool fullscreen) {
     }
 
     if(SDL_Init(SDL_INIT_EVERYTHING) == false){
-        std::cout << "Initialised";
+        std::cout << "Initialised" << std::endl;
         window = SDL_CreateWindow("Game", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, flag);
         if(window){
-            std::cout << "window created";
+            std::cout << "window created" << std::endl;
         }
         renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
         if(renderer){
             SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
-            std::cout << "renderer created";
+            std::cout << "renderer created" << std::endl;
         }
         isRunning = true;
     } else {

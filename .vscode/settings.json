@@ -2,6 +2,7 @@
     "cmake.sourceDirectory": "C:/Users/Мария/Desktop/siyaem/PackmanBySiyaem/SDL2/test",
     "C_Cpp.errorSquiggles": "disabled",
     "files.associations": {
-        "iostream": "cpp"
+        "iostream": "cpp",
+        "ostream": "cpp"
     }
 }

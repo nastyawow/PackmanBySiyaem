@@ -14,14 +14,32 @@
 Game* game = nullptr;
 
 int main(int argc, char* argv[]){
+
+	const int FPS = 60;
+	const int frDelay = 1000 / 60;
+
+	Uint32 frStart;
+	int frTime;
+
+
+
 	game = new Game();
 
 	game->init("Game", 800, 600, false);
 
 	while(game -> running()){
+
+		frStart = SDL_GetTicks();
+
+
 		game->handleEvents();
 		game->update();
 		game->render();
+
+		frTime = SDL_GetTicks() - frStart;
+		if(frDelay > frTime){
+			SDL_Delay(frDelay - frTime);
+		}
 	}
 	game->clean();
 

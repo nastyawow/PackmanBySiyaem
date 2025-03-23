@@ -10,13 +10,13 @@
 #include <array>
 
 
-#include "game.hpp"
+#include "../game.hpp"
 
 class Component;
 
 class Entity;
 
-using ComponentID = std::size_t;
+using ComponentID = stsd::size_t;
 
 inline ComponentID getComponentTypeID() {
     static ComponentID lastID = 0;
@@ -25,6 +25,7 @@ inline ComponentID getComponentTypeID() {
 
 template <typename T> inline ComponentID getComponentTypeID() noexcept{
 
+    static_assert (std::is_base_of<Component, T>::value, "");
     static ComponentID typeID = getComponentTypeID();
     return typeID;
 
@@ -56,11 +57,11 @@ class Entity{
     public:
     void update(){
         for (auto& c : components) c->update();
-        for (auto& c : components) c->draw();
+        
     }
 
     void draw() {
-
+        for (auto& c : components) c->draw();
     }
     bool isActive() const{return active;}
     void destroy() {active = false;}

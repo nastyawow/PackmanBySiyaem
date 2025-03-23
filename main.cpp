@@ -12,6 +12,7 @@
 
 #include "Texture.cpp"
 #include "Object.cpp"
+#include "Map.cpp"
 
 Game* game = nullptr;
 

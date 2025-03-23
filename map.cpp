@@ -23,9 +23,25 @@ int lvl1[20][25] = {
     {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
     {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 
-}
+};
 
-Map::Map(){
+// Map::Map(){
+//     sand = Texture::LoadTexture("assets/sand.png");
+//     stone = Texture::LoadTexture("assets/stone.png");
+//     wall = Texture::LoadTexture("assets/wall.png");
+
+//     LoadMap(lvl1);
+
+//     src.x = src.y = 0;
+//     src.w = dest.w = 32;
+//     src.h = dest.h = 32;
+
+//     dest.x = dest.y = 0;    
+
+// }
+
+Map::Map()
+{
     sand = Texture::LoadTexture("assets/sand.png");
     stone = Texture::LoadTexture("assets/stone.png");
     wall = Texture::LoadTexture("assets/wall.png");
@@ -36,19 +52,19 @@ Map::Map(){
     src.w = dest.w = 32;
     src.h = dest.h = 32;
 
-    dest.x = dest.y = 0;    
-
+    dest.x = dest.y = 0;   
 }
 
 void Map::LoadMap(int arr[20][25]){
     for (int row = 0; row < 20; row++){
         for (int col = 0; col < 20; col++){
-            map[ror][col] = arr[row][col];
+            map[row][col] = arr[row][col];
                 }
     }
 
 }
 void Map::DrawMap(){
+    int type = 0;
     for (int row = 0; row < 20; row++){
         for (int col = 0; col < 20; col++){
             type = map[row][col];

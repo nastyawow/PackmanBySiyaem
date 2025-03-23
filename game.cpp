@@ -2,12 +2,16 @@
 
 #include "Texture.hpp"
 
-SDL_Texture* playerTexture;
-SDL_Rect* srcR, destR;
+#include "Object.hpp"
+
+GameObject *player;
+GameObject *enemy;
 
 Game::Game() {}
 
 Game::~Game() {}
+
+SDL_Renderer* Game::renderer = nullptr;
 
 void Game::init(const char* title, int width, int height, bool fullscreen) {
 
@@ -32,9 +36,12 @@ void Game::init(const char* title, int width, int height, bool fullscreen) {
         isRunning = false;
     }
 
-    SDL_Surface* tmpSurface = IMG_Load("assets/image.png");
-    playerTexture = SDL_CreateTextureFromSurface(renderer, tmpSurface);
-    SDL_FreeSurface(tmpSurface);
+    player = new GameObject("assets/image.png", 0, 0);
+
+    enemy = new GameObject("assets/image.png", 0, 0);
+    //SDL_Surface* tmpSurface = IMG_Load("assets/image.png");
+    //playerTexture = SDL_CreateTextureFromSurface(renderer, tmpSurface);
+    //SDL_FreeSurface(tmpSurface);
 
     // playerTexture = Texture::LoadTexture("assets/image.png", renderer); // - альтернативная запись
 }
@@ -64,15 +71,15 @@ void Game::handleEvents() {
 
 void Game::update() {
     count++;
-    destR.h = 64;
-    destR.w = 64;
-    destR.x = count;
     std::cout << count << std::endl;
+    player->update();
+    enemy->update();
 }
 
 void Game::render() {
     SDL_RenderClear(renderer);
-    SDL_RenderCopy(renderer, playerTexture, NULL, &destR);
+    player->render();
+    enemy->render();
 
     SDL_RenderPresent(renderer);
 }

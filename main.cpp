@@ -10,6 +10,8 @@
 #include "game.hpp"
 #include "game.cpp"
 
+#include "Texture.cpp"
+#include "Object.cpp"
 
 Game* game = nullptr;
 
@@ -25,7 +27,7 @@ int main(int argc, char* argv[]){
 
 	game = new Game();
 
-	game->init("Game", 800, 600, false);
+	game->init("Game", 800, 640, false);
 
 	while(game -> running()){
 

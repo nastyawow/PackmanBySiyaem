@@ -23,6 +23,8 @@ class Game{
         return isRunning;
       };
 
+      static SDL_Renderer *renderer;
+
     private:
       int count = 0;
       bool isRunning;

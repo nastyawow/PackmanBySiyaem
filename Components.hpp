@@ -13,7 +13,7 @@ class PositionComponent : public Component {
     int x() {return xpos;}
     int y() {return ypos;}
 
-    void init() override{
+    void init() override {
         xpos = 0;
         ypos = 0;
     }

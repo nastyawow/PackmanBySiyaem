@@ -39,9 +39,9 @@ class Component{
     public:
         Entity* entity;
 
-        virtual init(){};
-        virtual update(){};
-        virtual draw(){};
+        virtual void init(){};
+        virtual void update(){};
+        virtual void draw(){};
 
         virtual ~Component(){};
 };
@@ -51,8 +51,9 @@ class Entity{
     bool active = true;
     std::vector<std::unique_ptr<Component>> components;
     ComponentBitSet componentBitSet;
+    ComponentArray componentArray;
 
-    private:
+    public:
     void update(){
         for (auto& c : components) c->update();
         for (auto& c : components) c->draw();
@@ -75,8 +76,8 @@ class Entity{
         std::unique_ptr<Component> uPtr{ c };
         components.emplace_back(std::move(uPtr));
 
-        componentsArray[getComponentTypeID<T>()] = c;
-        componentsBitSet[getComponentTypeID<T>()] = true;
+        componentArray[getComponentTypeID<T>()] = c;
+        componentBitSet[getComponentTypeID<T>()] = true;
 
         c->init();
         return *c;
@@ -111,7 +112,7 @@ class Manager{
 
         Entity& addEntity(){
             Entity* e = new Entity();
-            std::unique_ptr<Entity> uPtr{ e ;}
+            std::unique_ptr<Entity> uPtr{ e };
             entities.emplace_back(std::move(uPtr));
             return *e;
         }

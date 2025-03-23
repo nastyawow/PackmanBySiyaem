@@ -1,5 +1,4 @@
 #ifndef Map_hpp
-
 #define Map_hpp
 
 #include "game.hpp"

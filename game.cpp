@@ -4,7 +4,7 @@
 
 #include "Object.hpp"
 
-#include "map.hpp"
+#include "Map.hpp"
 
 #include "ECS.hpp"
 #include "Components.hpp"

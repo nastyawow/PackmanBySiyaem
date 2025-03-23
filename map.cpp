@@ -30,16 +30,50 @@ Map::Map(){
     stone = Texture::LoadTexture("assets/stone.png");
     wall = Texture::LoadTexture("assets/wall.png");
 
+    LoadMap(lvl1);
+
+    src.x = src.y = 0;
+    src.w = dest.w = 32;
+    src.h = dest.h = 32;
+
+    dest.x = dest.y = 0;    
+
 }
 
 void Map::LoadMap(int arr[20][25]){
     for (int row = 0; row < 20; row++){
         for (int col = 0; col < 20; col++){
-            
-        }
+            map[ror][col] = arr[row][col];
+                }
     }
 
 }
 void Map::DrawMap(){
+    for (int row = 0; row < 20; row++){
+        for (int col = 0; col < 20; col++){
+            type = map[row][col];
+
+            dest.x = col * 32;
+            dest.y = row * 32;
+
+            switch (type){
+                case 0:
+                    Texture::Draw(wall, src, dest);
+                    break;
+
+                case 1:
+                    Texture::Draw(sand, src, dest);
+                    break;
+
+                case 2:
+                    Texture::Draw(stone, src, dest);
+                    break;
+
+                default:
+                break;
+            }
+        }
+    }
+
 
 }

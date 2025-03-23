@@ -25,20 +25,6 @@ int lvl1[20][25] = {
 
 };
 
-// Map::Map(){
-//     sand = Texture::LoadTexture("assets/sand.png");
-//     stone = Texture::LoadTexture("assets/stone.png");
-//     wall = Texture::LoadTexture("assets/wall.png");
-
-//     LoadMap(lvl1);
-
-//     src.x = src.y = 0;
-//     src.w = dest.w = 32;
-//     src.h = dest.h = 32;
-
-//     dest.x = dest.y = 0;    
-
-// }
 
 Map::Map()
 {
@@ -55,6 +41,13 @@ Map::Map()
     dest.x = dest.y = 0;   
 }
 
+Map::~Map()
+{
+    SDL_DestroyTexture(sand);
+    SDL_DestroyTexture(wall);
+    SDL_DestroyTexture(stone);
+
+}
 void Map::LoadMap(int arr[20][25]){
     for (int row = 0; row < 20; row++){
         for (int col = 0; col < 20; col++){
@@ -74,11 +67,11 @@ void Map::DrawMap(){
 
             switch (type){
                 case 0:
-                    Texture::Draw(wall, src, dest);
+                    Texture::Draw(sand, src, dest);
                     break;
 
                 case 1:
-                    Texture::Draw(sand, src, dest);
+                    Texture::Draw(wall, src, dest);
                     break;
 
                 case 2:

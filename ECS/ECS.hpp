@@ -16,7 +16,7 @@ class Component;
 
 class Entity;
 
-using ComponentID = stsd::size_t;
+using ComponentID = std::size_t;
 
 inline ComponentID getComponentTypeID() {
     static ComponentID lastID = 0;
@@ -67,7 +67,7 @@ class Entity{
     void destroy() {active = false;}
 
     template <typename T> bool hasComponent() const {
-        return componentBitSet[getComponentTypeID<T>];
+        return componentBitSet[getComponentTypeID<T>()];
     }
 
     template <typename T, typename... TArgs>

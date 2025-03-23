@@ -1,6 +1,9 @@
 #ifndef Vector_hpp
 
 #define Vector_hpp
+
+#include<iostream>
+
     class Vector{
         public:
         float x;
@@ -24,7 +27,7 @@
         Vector& operator*=(const Vector& vec);
         Vector& operator/=(const Vector& vec);
 
+        friend std::ostream& operator<<(std::ostream& stream, const Vector& vec);
 
-
-    }
+    };
 #endif

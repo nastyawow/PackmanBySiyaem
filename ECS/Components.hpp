@@ -6,6 +6,8 @@
 #include "ECS.hpp"
 #include "Transform.hpp"
 #include "Sprite.hpp"
+#include "Keyboard.hpp"
+#include "Collider.hpp"
 
 // class PositionComponent : public Component {
 //     private:

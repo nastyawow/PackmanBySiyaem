@@ -9,8 +9,15 @@
 
 #include "ECS/ECS.hpp"
 #include "ECS/Components.hpp"
+#include "ECS/Transform.hpp"
+
+
 
 #include "Map.hpp"
+#include "Vector.hpp"
+
+#include "Collision.hpp"
+#include "ECS/Collider.hpp"
 // #include "ECS/Position.hpp"
 // #include "ECS/Sprite.hpp"
 
@@ -20,9 +27,10 @@ Map *map;
 Manager manager;
 
 SDL_Renderer* Game::renderer = nullptr;
-
+SDL_Event Game::event;
 
 auto& player(manager.addEntity());
+auto& wall(manager.addEntity());
 
 Game::Game() {}
 
@@ -58,8 +66,15 @@ void Game::init(const char* title, int width, int height, bool fullscreen) {
 
     map = new Map();
 
-    player.addComponent<PositionComponent>(100, 500);
+    player.addComponent<TransformComponent>();
     player.addComponent<SpriteComponent>("assets/image.png");
+    player.addComponent<KeyboardController>();
+    player.addComponent<ColliderComponent>("player");
+
+    wall.addComponent<TransformComponent>(300.0f, 300.0f, 300, 20, 1);
+    wall.addComponent<SpriteComponent>("assets/wall.png");
+    wall.addComponent<ColliderComponent>("wall");
+    
 
     // playerEntity.addComponent<PositionComponent>();
     // playerEntity.getComponent<PositionComponent>().setPos(10,10);
@@ -74,7 +89,7 @@ void Game::init(const char* title, int width, int height, bool fullscreen) {
 }
 
 void Game::handleEvents() {
-    SDL_Event event;
+    
     SDL_PollEvent(&event);
     switch(event.type) {
         case SDL_QUIT:
@@ -101,10 +116,15 @@ void Game::update() {
     // std::cout << count << std::endl;
     manager.refresh();
     manager.update();
-
-    if(player.getComponent<PositionComponent>().x() > 100){
-        player.getComponent<SpriteComponent>().setTex("assets/image.png")
-    }
+    if(Collision::AABB(player.getComponent<ColliderComponent>().collider, wall.getComponent<ColliderComponent>().collider)){
+        player.getComponent<TransformComponent>().scale = 1;
+        std::cout << "WALL";
+    };
+    
+    // player.getComponent<TransformComponent>().position.Add(Vector(5, 0));
+    // if(player.getComponent<TransformComponent>().position.x > 100){
+    //     player.getComponent<SpriteComponent>().setTex("assets/image.png");
+    // }
 
 
 

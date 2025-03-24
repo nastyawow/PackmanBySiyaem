@@ -43,7 +43,7 @@
     
             transform = &entity->getComponent<TransformComponent>();
     
-            tex = Texture::LoadTexture("assets/ColTex.png");
+            tex = Texture::LoadTexture("assets/player_anims.png");
             srcR = { 0, 0, 32, 32 };
             destR = { collider.x, collider.y, collider.w, collider.h };
 

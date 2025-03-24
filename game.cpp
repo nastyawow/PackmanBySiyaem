@@ -31,7 +31,7 @@ Manager manager;
 SDL_Renderer* Game::renderer = nullptr;
 SDL_Event Game::event;
 
-SDL_Rect Game::camera = {0,0,800, 640};
+SDL_Rect Game::camera = {0,0, 928, 1056};
 
 // std::vector<ColliderComponent*> Game::colliders;
 

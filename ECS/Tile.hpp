@@ -51,6 +51,7 @@ class TileComponent : public Component {
     void draw() override
 	{
 		Texture::Draw(texture, srcRect, destRect, SDL_FLIP_NONE);
+		
 	}
        
     

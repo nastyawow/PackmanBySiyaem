@@ -16,7 +16,7 @@ class Map {
 
     const char* mapFilePath;
     int mapScale;
-    int tileScale;
+    int tileSize;
 
         
 

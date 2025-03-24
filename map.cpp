@@ -9,7 +9,7 @@
 
 extern Manager manager;
 
-Map::Map(const char* mf, int ms, int ts) : mapFilePath(mf), mapScale(ms), tileScale(ts)
+Map::Map(const char* mf, int ms, int ts) : mapFilePath(mf), mapScale(ms), tileSize(ts)
 {
      
 }

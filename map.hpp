@@ -2,23 +2,23 @@
 #define Map_hpp
 
 #include "game.hpp"
-
+#include <string>
 class Map {
     public:
         Map();
         ~Map();
 
-        void LoadMap(int arr[20][25]);
-        void DrawMap();
+        static void LoadMap(std::string path, int sizeX, int sizeY);
+        // void DrawMap();
 
     private:
 
-        SDL_Rect src, dest;
-        SDL_Texture* sand;
-        SDL_Texture* stone;
-        SDL_Texture* wall;
+        // SDL_Rect src, dest;
+        // SDL_Texture* sand;
+        // SDL_Texture* stone;
+        // SDL_Texture* wall;
 
-        int map[20][25];
+        // int map[20][25];
 
 
 

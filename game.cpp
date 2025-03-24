@@ -29,8 +29,26 @@ Manager manager;
 SDL_Renderer* Game::renderer = nullptr;
 SDL_Event Game::event;
 
+std::vector<ColliderComponent*> Game::colliders;
+
 auto& player(manager.addEntity());
 auto& wall(manager.addEntity());
+
+const char* mapfile = "assets/sss.png";
+
+bool Game::isRunning = false;
+
+// enum groupLabels : std::size_t {
+//     groupMap,
+//     groupPlayers,
+//     groupEnemies;
+//     groupColliders;
+// }
+
+// auto& tile0(manager.addEntity());
+// auto& tile1(manager.addEntity());
+// auto& tile2(manager.addEntity());
+
 
 Game::Game() {}
 
@@ -65,15 +83,16 @@ void Game::init(const char* title, int width, int height, bool fullscreen) {
     // enemy = new GameObject("assets/image.png", 0, 0);
 
     map = new Map();
+    Map::LoadMap("assets/map.map", 29, 33);
 
-    player.addComponent<TransformComponent>();
-    player.addComponent<SpriteComponent>("assets/image.png");
+    
+
+    player.addComponent<TransformComponent>(4);
+    player.addComponent<SpriteComponent>("assets/player_anims.png", true);
     player.addComponent<KeyboardController>();
     player.addComponent<ColliderComponent>("player");
 
-    wall.addComponent<TransformComponent>(300.0f, 300.0f, 300, 20, 1);
-    wall.addComponent<SpriteComponent>("assets/wall.png");
-    wall.addComponent<ColliderComponent>("wall");
+   
     
 
     // playerEntity.addComponent<PositionComponent>();
@@ -116,10 +135,9 @@ void Game::update() {
     // std::cout << count << std::endl;
     manager.refresh();
     manager.update();
-    if(Collision::AABB(player.getComponent<ColliderComponent>().collider, wall.getComponent<ColliderComponent>().collider)){
-        player.getComponent<TransformComponent>().scale = 1;
-        std::cout << "WALL";
-    };
+    for(auto cc : colliders){
+        Collision::AABB(player.getComponent<ColliderComponent>(), *cc);
+    }
     
     // player.getComponent<TransformComponent>().position.Add(Vector(5, 0));
     // if(player.getComponent<TransformComponent>().position.x > 100){
@@ -139,7 +157,7 @@ void Game::update() {
 
 void Game::render() {
     SDL_RenderClear(renderer);
-    map->DrawMap();
+    // map->DrawMap();
     // player->render();
     // enemy->render();
 
@@ -152,4 +170,10 @@ void Game::clean() {
     SDL_DestroyWindow(window);
 	SDL_DestroyRenderer(renderer);
 	SDL_Quit(); //руиним все :)
+}
+
+void Game::AddTile(int srcX, int srcY, int xpos, int ypos) {
+    auto& tile(manager.addEntity());
+
+    tile.addComponent<TileComponent>(srcX, srcY, xpos, ypos, mapfile);
 }

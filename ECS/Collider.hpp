@@ -5,6 +5,7 @@
 #include "ECS.hpp"
 #include "Components.hpp"
 #include<string>
+#include "../Texture.hpp"
 
  class ColliderComponent : public Component
  {
@@ -39,10 +40,12 @@
             }
     
             transform = &entity->getComponent<TransformComponent>();
+
+            Game::colliders.push_back(this);
     
-            tex = Texture::LoadTexture("assets/coltex.png");
-            srcR = { 0, 0, 32, 32 };
-            destR = { collider.x, collider.y, collider.w, collider.h };
+            // tex = Texture::LoadTexture("assets/coltex.png");
+            // srcR = { 0, 0, 32, 32 };
+            // destR = { collider.x, collider.y, collider.w, collider.h };
     
         }
     
@@ -60,10 +63,10 @@
             // destR.y = collider.y - Game::camera.y;
         }
     
-        // void draw() override
-        // {
-        //     TextureManager::Draw(tex, srcR, destR, SDL_FLIP_NONE);
-        // }
+        void draw() override
+        {
+            Texture::Draw(tex, srcR, destR, SDL_FLIP_NONE);
+        }
     
     private:
     

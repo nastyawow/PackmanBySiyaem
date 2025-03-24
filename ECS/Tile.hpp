@@ -1,0 +1,93 @@
+#ifndef Tile_hpp
+
+#define Tile_hpp
+
+
+#include "ECS.hpp"
+#include "Transform.hpp"
+#include "Sprite.hpp"
+#include "../Vector.hpp"
+#include "../game.hpp"
+#include "../Texture.hpp"
+#include<string>
+
+
+class TileComponent : public Component {
+    public:
+    SDL_Texture * texture;
+	SDL_Rect srcRect, destRect;
+	Vector position;
+    TileComponent() = default;
+
+    ~TileComponent()
+	{
+		SDL_DestroyTexture(texture);
+	}
+
+	TileComponent(int srcX, int srcY, int xpos, int ypos, const char* path)
+	{
+		// texture = Game::assets->GetTexture(id);
+
+        texture = Texture::LoadTexture(path);
+
+		srcRect.x = srcX;
+		srcRect.y = srcY;
+		srcRect.w = srcRect.h = 32;
+		// position.x = static_cast<float>(xpos);
+		// position.y = static_cast<float>(ypos);
+        destRect.x = xpos;
+        destRect.y = ypos;
+		destRect.w = destRect.h = 32;
+	}
+    void draw() override
+	{
+		Texture::Draw(texture, srcRect, destRect, SDL_FLIP_NONE);
+	}
+       
+    
+};
+
+
+
+// class TileComponent : public Component
+// {
+// public:
+
+// 	SDL_Texture * texture;
+// 	SDL_Rect srcRect, destRect;
+// 	Vector position;
+
+// 	TileComponent() = default;
+
+// 	~TileComponent()
+// 	{
+// 		SDL_DestroyTexture(texture);
+// 	}
+
+// 	TileComponent(int srcX, int srcY, int xpos, int ypos, int tsize, int tscale, std::string id)
+// 	{
+// 		texture = Game::assets->GetTexture(id);
+
+// 		srcRect.x = srcX;
+// 		srcRect.y = srcY;
+// 		srcRect.w = srcRect.h = tsize;
+// 		position.x = static_cast<float>(xpos);
+// 		position.y = static_cast<float>(ypos);
+// 		destRect.w = destRect.h = tsize * tscale;
+// 	}
+
+// 	void update() override
+// 	{
+// 		// destRect.x = static_cast<int>(position.x - Game::camera.x);
+// 		// destRect.y = static_cast<int>(position.y - Game::camera.y);
+//         destRect.x = static_cast<int>(position.x);
+// 		destRect.y = static_cast<int>(position.y);
+// 	}
+// 	void draw() override
+// 	{
+// 		Texture::Draw(texture, srcRect, destRect, SDL_FLIP_NONE);
+// 	}
+// };
+
+
+#endif

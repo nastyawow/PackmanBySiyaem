@@ -27,6 +27,9 @@
         Vector& operator*=(const Vector& vec);
         Vector& operator/=(const Vector& vec);
 
+        Vector& operator*(const int& i);
+	    Vector& Zero();
+
         friend std::ostream& operator<<(std::ostream& stream, const Vector& vec);
 
     };

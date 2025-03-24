@@ -8,6 +8,7 @@
 #include "Sprite.hpp"
 #include "Keyboard.hpp"
 #include "Collider.hpp"
+#include "Tile.hpp"
 
 // class PositionComponent : public Component {
 //     private:

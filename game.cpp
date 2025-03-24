@@ -33,10 +33,10 @@ SDL_Event Game::event;
 
 SDL_Rect Game::camera = {0,0,800, 640};
 
-std::vector<ColliderComponent*> Game::colliders;
+// std::vector<ColliderComponent*> Game::colliders;
 
 auto& player(manager.addEntity());
-auto& wall(manager.addEntity());
+
 
 const char* mapfile = "assets/sss.png";
 
@@ -89,8 +89,8 @@ void Game::init(const char* title, int width, int height, bool fullscreen) {
     // assets->AddTexture("map", "assets/sss.png");
 	// assets->AddTexture("player", "assets/player_anims.png");
 
-    map = new Map();
-    Map::LoadMap("assets/map.map", 29, 33);
+    map = new Map("assets/sss.png", 3, 32);
+    map->LoadMap("assets/map.map", 29, 33);
 
     
 
@@ -139,10 +139,21 @@ void Game::handleEvents() {
 }
 
 void Game::update() {
-    // count++;
-    // std::cout << count << std::endl;
+    SDL_Rect playerCol = player.getComponent<ColliderComponent>().collider;
+    Vector playerPos = player.getComponent<TransformComponent>().position;
+
     manager.refresh();
     manager.update();
+
+    for (auto& c : colliders)
+	{
+		SDL_Rect cCol = c->getComponent<ColliderComponent>().collider;
+		if (Collision::AABB(cCol, playerCol))
+		{
+			player.getComponent<TransformComponent>().position = playerPos;
+		}
+	}
+
 
     camera.x = player.getComponent<TransformComponent>().position.x - 464;
     camera.y = player.getComponent<TransformComponent>().position.y - 528;
@@ -216,9 +227,6 @@ void Game::clean() {
 	SDL_Quit(); //руиним все :)
 }
 
-void Game::AddTile(int srcX, int srcY, int xpos, int ypos) {
-    auto& tile(manager.addEntity());
-
-    tile.addComponent<TileComponent>(srcX, srcY, xpos, ypos, mapfile);
-    tile.addGroup(groupMap);
-}
+// void Game::AddTile(int srcX, int srcY, int xpos, int ypos) {
+    
+// }

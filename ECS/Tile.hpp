@@ -24,7 +24,7 @@ class TileComponent : public Component {
 		SDL_DestroyTexture(texture);
 	}
 
-	TileComponent(int srcX, int srcY, int xpos, int ypos, const char* path)
+	TileComponent(int srcX, int srcY, int xpos, int ypos, int gsize, int gscale, const char* path)
 	{
 		// texture = Game::assets->GetTexture(id);
 
@@ -32,12 +32,14 @@ class TileComponent : public Component {
 
 		srcRect.x = srcX;
 		srcRect.y = srcY;
-		srcRect.w = srcRect.h = 32;
+		srcRect.w = srcRect.h = gsize;
+
 		position.x = xpos;
 		position.y = ypos;
+
         destRect.x = xpos;
         destRect.y = ypos;
-		destRect.w = destRect.h = 32;
+		destRect.w = destRect.h = gsize * gscale;
 	}
 
 	void update() override

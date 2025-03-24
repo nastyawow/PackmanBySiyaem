@@ -4,9 +4,12 @@
 
 #include "game.hpp"
 #include <fstream>
+#include "ECS/ECS.hpp"
+#include "ECS/Components.hpp"
 
+extern Manager manager;
 
-Map::Map()
+Map::Map(const char* mf, int ms, int ts) : mapFilePath(mf), mapScale(ms), tileScale(ts)
 {
      
 }
@@ -27,10 +30,10 @@ void Map::LoadMap(std::string path, int sizeX, int sizeY){
 		for (int x = 0; x < sizeX; x++)
 		{
 			mapFile.get(c);
-            srcY = atoi(&c) * 32;
+            srcY = atoi(&c) * tileSize;
             mapFile.get(c);
-            srcX = atoi(&c) * 32;
-            Game::AddTile(srcX, srcY, x * 32, y * 32);
+            srcX = atoi(&c) * tileSize;
+            AddTile(srcX, srcY, x * (tileSize * mapScale), y * (tileSize * mapScale));
 			// if (c == '1')
 			// {
 			// 	auto& tcol(manager.addEntity());
@@ -41,37 +44,33 @@ void Map::LoadMap(std::string path, int sizeX, int sizeY){
 		}
 	}
 
+	mapFile.ignore();
+
+	for (int y = 0; y < sizeY; y++)
+	{
+		for (int x = 0; x < sizeX; x++)
+		{
+			mapFile.get(c);
+			if (c == '1')
+			{
+				auto& tcol(manager.addEntity());
+				tcol.addComponent<ColliderComponent>("ground", x * (tileSize * mapScale), y * (tileSize * mapScale), tileSize * mapScale);
+				tcol.addGroup(Game::groupColliders);
+				
+			}
+			mapFile.ignore();
+		}
+	}
+
     mapFile.close();
 
 
 }
-// void Map::DrawMap(){
-//     int type = 0;
-//     for (int row = 0; row < 20; row++){
-//         for (int col = 0; col < 20; col++){
-//             type = map[row][col];
 
-//             dest.x = col * 32;
-//             dest.y = row * 32;
+void Map::AddTile(int srcX, int srcY, int xpos, int ypos) {
+	auto& tile(manager.addEntity());
 
-//             switch (type){
-//                 case 0:
-//                     Texture::Draw(wall, src, dest);
-//                     break;
+    tile.addComponent<TileComponent>(srcX, srcY, xpos, ypos, tileSize, mapScale mapfile);
+    tile.addGroup(Game::groupMap);
 
-//                 case 1:
-//                     Texture::Draw(sand, src, dest);
-//                     break;
-
-//                 case 2:
-//                     Texture::Draw(stone, src, dest);
-//                     break;
-
-//                 default:
-//                 break;
-//             }
-//         }
-//     }
-
-
-// }
+}

@@ -12,6 +12,8 @@
     public:
         SDL_Rect collider;
         std::string tag;
+
+       
     
         SDL_Texture* tex;
         SDL_Rect srcR, destR;
@@ -43,15 +45,15 @@
 
             Game::colliders.push_back(this);
     
-            // tex = Texture::LoadTexture("assets/coltex.png");
-            // srcR = { 0, 0, 32, 32 };
-            // destR = { collider.x, collider.y, collider.w, collider.h };
+            tex = Texture::LoadTexture("assets/ColTex.png");
+            srcR = { 0, 0, 32, 32 };
+            destR = { collider.x, collider.y, collider.w, collider.h };
     
         }
     
         void update() override
         {
-            // if (tag != "terrain")
+            if (tag != "ground"){
             
                 collider.x = static_cast<int>(transform->position.x);
                 collider.y = static_cast<int>(transform->position.y);
@@ -59,8 +61,8 @@
                 collider.h = transform->height * transform->scale;
             
     
-            // destR.x = collider.x - Game::camera.x;
-            // destR.y = collider.y - Game::camera.y;
+                destR.x = collider.x - Game::camera.x;
+                destR.y = collider.y - Game::camera.y;
         }
     
         void draw() override

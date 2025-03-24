@@ -31,6 +31,8 @@ Manager manager;
 SDL_Renderer* Game::renderer = nullptr;
 SDL_Event Game::event;
 
+SDL_Rect Game::camera = {0,0,800, 640};
+
 std::vector<ColliderComponent*> Game::colliders;
 
 auto& player(manager.addEntity());
@@ -92,7 +94,7 @@ void Game::init(const char* title, int width, int height, bool fullscreen) {
 
     
 
-    player.addComponent<TransformComponent>(4);
+    player.addComponent<TransformComponent>(2);
     player.addComponent<SpriteComponent>("assets/player_anims.png", true);
     player.addComponent<KeyboardController>();
     player.addComponent<ColliderComponent>("player");
@@ -142,12 +144,27 @@ void Game::update() {
     manager.refresh();
     manager.update();
 
-    Vector pVel = player.getComponent<TransformComponent>().velocity;
-    int pSpeed = player.getComponent<TransformComponent>().speed;
+    camera.x = player.getComponent<TransformComponent>().position.x - 464;
+    camera.y = player.getComponent<TransformComponent>().position.y - 528;
+
+    if (camera.x < 0)
+		camera.x = 0;
+	if (camera.y < 0)
+		camera.y = 0;
+	if (camera.x > camera.w)
+		camera.x = camera.w;
+	if (camera.y > camera.h)
+		camera.y = camera.h;
+
+
+
+    // Vector pVel = player.getComponent<TransformComponent>().velocity;
+    // int pSpeed = player.getComponent<TransformComponent>().speed;
     
-    for(auto& cc : colliders){
-        Collision::AABB(player.getComponent<ColliderComponent>(), *cc);
-    };
+    // for(auto& t : tiles){
+    //     t->getComponent<TileComponent>().destRect.x += -(pVel.x * pSpeed);
+    //     t->getComponent<TileComponent>().destRect.y += -(pVel.y * pSpeed);
+    // };
     
     // player.getComponent<TransformComponent>().position.Add(Vector(5, 0));
     // if(player.getComponent<TransformComponent>().position.x > 100){

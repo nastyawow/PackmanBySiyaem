@@ -33,12 +33,19 @@ class TileComponent : public Component {
 		srcRect.x = srcX;
 		srcRect.y = srcY;
 		srcRect.w = srcRect.h = 32;
-		// position.x = static_cast<float>(xpos);
-		// position.y = static_cast<float>(ypos);
+		position.x = xpos;
+		position.y = ypos;
         destRect.x = xpos;
         destRect.y = ypos;
 		destRect.w = destRect.h = 32;
 	}
+
+	void update() override
+	{
+		destRect.x = position.x - Game::camera.x;
+		destRect.y = position.y - Game::camera.y;
+	}
+
     void draw() override
 	{
 		Texture::Draw(texture, srcRect, destRect, SDL_FLIP_NONE);

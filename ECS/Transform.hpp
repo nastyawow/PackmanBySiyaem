@@ -24,7 +24,7 @@ struct TransformComponent : public Component {
     TransformComponent(int sc)
 	{
 		position.x = 400;
-        position.x = 320;
+        position.y = 320;
 		scale = sc;
 	}
 
@@ -47,6 +47,7 @@ struct TransformComponent : public Component {
     void update() override {
         position.x += velocity.x * speed;
         position.y += velocity.y * speed;
+
     }
 
 

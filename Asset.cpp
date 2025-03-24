@@ -1,4 +1,4 @@
-#include "AssetManager.hpp"
+#include "Asset.hpp"
 #include "ECS\Components.hpp"
 
 AssetManager::AssetManager(Manager* man) : manager(man)
@@ -7,7 +7,7 @@ AssetManager::AssetManager(Manager* man) : manager(man)
 AssetManager::~AssetManager()
 {}
 
-void AssetManager::CreateProjectile(Vector2D pos, Vector vel, int range, int speed, std::string id)
+void AssetManager::CreateProjectile(Vector pos, Vector vel, int range, int speed, std::string id)
 {
 	auto& projectile(manager->addEntity());
 	projectile.addComponent<TransformComponent>(pos.x, pos.y, 32, 32, 1);

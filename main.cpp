@@ -15,6 +15,7 @@
 #include "Map.cpp"
 #include "Vector.cpp"
 #include "Collision.cpp"
+#include "Asset.cpp"
 
 Game* game = nullptr;
 

@@ -31,9 +31,9 @@ Manager manager;
 SDL_Renderer* Game::renderer = nullptr;
 SDL_Event Game::event;
 
-SDL_Rect Game::camera = {0,0, 928, 1056};
+SDL_Rect Game::camera = {0,0, 1952, 2528};
 
-// std::vector<ColliderComponent*> Game::colliders;
+AssetManager* Game::assets = new AssetManager(&manager);
 
 auto& player(manager.addEntity());
 
@@ -82,20 +82,19 @@ void Game::init(const char* title, int width, int height, bool fullscreen) {
         isRunning = false;
     }
 
-    // player = new GameObject("assets/image.png", 0, 0);
 
-    // enemy = new GameObject("assets/image.png", 0, 0);
+    assets->AddTexture("ground", "assets/sss.png");
+	assets->AddTexture("player", "assets/player_anims.png");
+	// assets->AddTexture("projectile", "assets/proj.png");
 
-    // assets->AddTexture("map", "assets/sss.png");
-	// assets->AddTexture("player", "assets/player_anims.png");
 
-    map = new Map("assets/sss.png", 3, 32);
+    map = new Map("ground", 3, 32);
     map->LoadMap("assets/map.map", 29, 33);
 
     
 
     player.addComponent<TransformComponent>(2);
-    player.addComponent<SpriteComponent>("assets/player_anims.png", true);
+    player.addComponent<SpriteComponent>("player", true);
     player.addComponent<KeyboardController>();
     player.addComponent<ColliderComponent>("player");
     player.addGroup(groupPlayers);
@@ -156,7 +155,7 @@ void Game::update() {
 
 
     camera.x = player.getComponent<TransformComponent>().position.x - 464;
-    camera.y = player.getComponent<TransformComponent>().position.y - 528;
+    camera.y = player.getComponent<TransformComponent>().position.y - 320;
 
     if (camera.x < 0)
 		camera.x = 0;
@@ -169,27 +168,7 @@ void Game::update() {
 
 
 
-    // Vector pVel = player.getComponent<TransformComponent>().velocity;
-    // int pSpeed = player.getComponent<TransformComponent>().speed;
     
-    // for(auto& t : tiles){
-    //     t->getComponent<TileComponent>().destRect.x += -(pVel.x * pSpeed);
-    //     t->getComponent<TileComponent>().destRect.y += -(pVel.y * pSpeed);
-    // };
-    
-    // player.getComponent<TransformComponent>().position.Add(Vector(5, 0));
-    // if(player.getComponent<TransformComponent>().position.x > 100){
-    //     player.getComponent<SpriteComponent>().setTex("assets/image.png");
-    // }
-
-
-
-    // player->update();
-    // enemy->update();
-    // map->LoadMap();
-
-    
-    // std::cout << newPlayer.getComponent<PositionComponent>().y() << "," << newPlayer.getComponent<PositionComponent>().y() << std::endl;
     
 }
 

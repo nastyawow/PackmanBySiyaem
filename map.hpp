@@ -5,7 +5,7 @@
 #include <string>
 class Map {
     public:
-        Map(const char* mf, int ms, int ts);
+        Map(std::string tID, int ms, int ts);
         ~Map();
 
         void AddTile(int srcX, int srcY, int xpos, int ypos);
@@ -13,7 +13,7 @@ class Map {
         // void DrawMap();
 
     private:
-
+    std::string texID;
     const char* mapFilePath;
     int mapScale;
     int tileSize;
@@ -25,3 +25,4 @@ class Map {
 };
 
 #endif
+

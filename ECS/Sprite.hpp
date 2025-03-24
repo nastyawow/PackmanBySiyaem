@@ -7,7 +7,7 @@
 #include "../SDL.h"
 #include "Animation.hpp"
 #include <map>
-
+#include "../Asset.hpp"
 
 class SpriteComponent : public Component
 {
@@ -34,7 +34,7 @@ class SpriteComponent : public Component
         setTex(path);
 
     }
-    SpriteComponent(const char* path, bool isAnimated)
+    SpriteComponent(std::string id, bool isAnimated)
     {
 		animated = isAnimated;
 
@@ -46,14 +46,14 @@ class SpriteComponent : public Component
 
 		Play("Idle");
 
-		setTex(path);
+		setTex(id);
 	}
     ~SpriteComponent(){
-        SDL_DestroyTexture(texture);
+        // SDL_DestroyTexture(texture);
     }
 
-    void setTex(const char* path) {
-        texture = Texture::LoadTexture(path);
+    void setTex(std::string id) {
+        texture = Game::assets->GetTexture(id);
     }
 
     void init() override {

@@ -23,8 +23,8 @@ struct TransformComponent : public Component {
 
     TransformComponent(int sc)
 	{
-		position.x = 400;
-        position.y = 320;
+		position.x = 128;
+        position.y = 128;
 		scale = sc;
 	}
 

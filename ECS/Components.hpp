@@ -9,6 +9,7 @@
 #include "Keyboard.hpp"
 #include "Collider.hpp"
 #include "Tile.hpp"
+#include "Projectile.hpp"
 
 // class PositionComponent : public Component {
 //     private:

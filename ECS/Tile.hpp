@@ -24,11 +24,11 @@ class TileComponent : public Component {
 		SDL_DestroyTexture(texture);
 	}
 
-	TileComponent(int srcX, int srcY, int xpos, int ypos, int gsize, int gscale, const char* path)
+	TileComponent(int srcX, int srcY, int xpos, int ypos, int gsize, int gscale, std::string id)
 	{
-		// texture = Game::assets->GetTexture(id);
+		texture = Game::assets->GetTexture(id);
 
-        texture = Texture::LoadTexture(path);
+        
 
 		srcRect.x = srcX;
 		srcRect.y = srcY;

@@ -8,6 +8,7 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <stdio.h>
+#include "Asset.hpp"
 
 class ColliderComponent;
 
@@ -34,6 +35,8 @@ class Game{
      
       static bool isRunning;
       static SDL_Rect camera;
+      static AssetManager* assets;
+
       enum groupLabels : std::size_t
       {
         groupMap,

@@ -34,12 +34,7 @@ void Map::LoadMap(std::string path, int sizeX, int sizeY){
             mapFile.get(c);
             srcX = atoi(&c) * tileSize;
             AddTile(srcX, srcY, x * (tileSize * mapScale), y * (tileSize * mapScale));
-			// if (c == '1')
-			// {
-			// 	auto& tcol(manager.addEntity());
-			// 	tcol.addComponent<ColliderComponent>("terrain", x * scaledSize, y * scaledSize, scaledSize);
-			// 	tcol.addGroup(Game::groupColliders);
-			// }
+			
 			mapFile.ignore();
 		}
 	}
@@ -54,7 +49,7 @@ void Map::LoadMap(std::string path, int sizeX, int sizeY){
 			if (c == '1')
 			{
 				auto& tcol(manager.addEntity());
-				tcol.addComponent<ColliderComponent>("ground", x * (tileSize * mapScale), y * (tileSize * mapScale), tileSize * mapScale);
+				tcol.addComponent<ColliderComponent>("ground", x * (tileSize * mapScale), y * (tileSize * mapScale), (tileSize * mapScale));
 				tcol.addGroup(Game::groupColliders);
 				
 			}

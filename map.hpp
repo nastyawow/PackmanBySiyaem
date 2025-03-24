@@ -18,12 +18,7 @@ class Map {
     int mapScale;
     int tileScale;
 
-        // SDL_Rect src, dest;
-        // SDL_Texture* sand;
-        // SDL_Texture* stone;
-        // SDL_Texture* wall;
-
-        // int map[20][25];
+        
 
 
 

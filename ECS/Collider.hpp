@@ -43,11 +43,12 @@
     
             transform = &entity->getComponent<TransformComponent>();
 
-            colliders.push_back(this);
+            // colliders.push_back(this);
     
             tex = Texture::LoadTexture("assets/ColTex.png");
             srcR = { 0, 0, 32, 32 };
             destR = { collider.x, collider.y, collider.w, collider.h };
+
     
         }
     
@@ -69,7 +70,7 @@
             Texture::Draw(tex, srcR, destR, SDL_FLIP_NONE);
         };
     
-    
+    private:
     
     };
 

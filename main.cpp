@@ -11,7 +11,7 @@
 #include "game.cpp"
 
 #include "Texture.cpp"
-#include "Object.cpp"
+// #include "Object.cpp"
 #include "Map.cpp"
 #include "Vector.cpp"
 #include "Collision.cpp"
@@ -49,7 +49,7 @@ int main(int argc, char* argv[]){
 	game->clean();
 
 	return 0;
-}
+};
 
 
 

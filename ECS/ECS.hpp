@@ -38,7 +38,7 @@ constexpr std::size_t maxComponents = 32;
 constexpr std::size_t maxGroups = 32;
 
 using ComponentBitSet = std::bitset<maxComponents>;
-using GroupBitset = std::bitset<maxComponents>;
+using GroupBitset = std::bitset<maxGroups>;
 
 using ComponentArray = std::array<Component*, maxComponents>;
 

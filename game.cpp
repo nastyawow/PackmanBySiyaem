@@ -7,7 +7,7 @@
 
 
 
-#include "ECS/ECS.hpp"
+
 #include "ECS/Components.hpp"
 #include "ECS/Transform.hpp"
 
@@ -18,6 +18,8 @@
 
 #include "Collision.hpp"
 #include "ECS/Collider.hpp"
+#include "ECS/ECS.hpp"
+#include "ECS/ECS.cpp"
 // #include "ECS/Position.hpp"
 // #include "ECS/Sprite.hpp"
 
@@ -38,16 +40,16 @@ const char* mapfile = "assets/sss.png";
 
 bool Game::isRunning = false;
 
-// enum groupLabels : std::size_t {
-//     groupMap,
-//     groupPlayers,
-//     groupEnemies;
-//     groupColliders;
-// }
+
 
 // auto& tile0(manager.addEntity());
 // auto& tile1(manager.addEntity());
 // auto& tile2(manager.addEntity());
+
+auto& tiles(manager.getGroup(Game::groupMap));
+auto& players(manager.getGroup(Game::groupPlayers));
+auto& colliders(manager.getGroup(Game::groupColliders));
+auto& projectiles(manager.getGroup(Game::groupProjectiles));
 
 
 Game::Game() {}
@@ -82,6 +84,9 @@ void Game::init(const char* title, int width, int height, bool fullscreen) {
 
     // enemy = new GameObject("assets/image.png", 0, 0);
 
+    // assets->AddTexture("map", "assets/sss.png");
+	// assets->AddTexture("player", "assets/player_anims.png");
+
     map = new Map();
     Map::LoadMap("assets/map.map", 29, 33);
 
@@ -91,6 +96,7 @@ void Game::init(const char* title, int width, int height, bool fullscreen) {
     player.addComponent<SpriteComponent>("assets/player_anims.png", true);
     player.addComponent<KeyboardController>();
     player.addComponent<ColliderComponent>("player");
+    player.addGroup(groupPlayers);
 
    
     
@@ -135,9 +141,13 @@ void Game::update() {
     // std::cout << count << std::endl;
     manager.refresh();
     manager.update();
-    for(auto cc : colliders){
+
+    Vector pVel = player.getComponent<TransformComponent>().velocity;
+    int pSpeed = player.getComponent<TransformComponent>().speed;
+    
+    for(auto& cc : colliders){
         Collision::AABB(player.getComponent<ColliderComponent>(), *cc);
-    }
+    };
     
     // player.getComponent<TransformComponent>().position.Add(Vector(5, 0));
     // if(player.getComponent<TransformComponent>().position.x > 100){
@@ -155,13 +165,30 @@ void Game::update() {
     
 }
 
+
+
 void Game::render() {
     SDL_RenderClear(renderer);
     // map->DrawMap();
     // player->render();
     // enemy->render();
 
-    manager.draw();
+    // manager.draw();
+
+
+    for (auto& t : tiles){
+        t->draw();
+    }
+    for (auto& c : colliders)
+	{
+		c->draw();
+	}
+
+	for (auto& p : players)
+	{
+		p->draw();
+	}
+
 
     SDL_RenderPresent(renderer);
 }
@@ -176,4 +203,5 @@ void Game::AddTile(int srcX, int srcY, int xpos, int ypos) {
     auto& tile(manager.addEntity());
 
     tile.addComponent<TileComponent>(srcX, srcY, xpos, ypos, mapfile);
+    tile.addGroup(groupMap);
 }

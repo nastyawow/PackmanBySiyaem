@@ -33,6 +33,13 @@ class Game{
       static SDL_Event event;
       static std::vector<ColliderComponent*> colliders;
       static bool isRunning;
+      enum groupLabels : std::size_t
+      {
+        groupMap,
+        groupPlayers,
+        groupColliders,
+        groupProjectiles
+      };
 
     private:
       int count = 0;

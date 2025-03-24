@@ -23,7 +23,8 @@ struct TransformComponent : public Component {
 
     TransformComponent(int sc)
 	{
-		position.Zero();
+		position.x = 400;
+        position.x = 320;
 		scale = sc;
 	}
 
@@ -48,15 +49,7 @@ struct TransformComponent : public Component {
         position.y += velocity.y * speed;
     }
 
-    // int x() {return xpos;}
-    // void x(int x) {xpos = x;}
-    // int y() {return ypos;}
-    // void y(int y) {ypos = y;}
-    // 
-    // void setPos(int x, int y) {
-    //     xpos = x;
-    //     ypos = y;
-    // }
+
 };
 
 #endif
